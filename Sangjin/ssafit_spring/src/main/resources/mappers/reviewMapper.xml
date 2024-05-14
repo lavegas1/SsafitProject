@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 네임스페이스에 DAO 풀패키지명을 작성 -->
+<mapper namespace="com.ssafit.review.model.dao.ReviewDao">
+	
+	<!-- 전체 게시글 조회 -->
+	<select id="selectAll" resultType="review">
+		SELECT * FROM review;
+	</select>
+	
+	<!-- 상세 게시글 조회 -->
+	<select id="selectOne"  resultType="review" parameterType="int">
+		SELECT * FROM review
+		WHERE id = #{id};
+	</select>
+	
+	<!-- 게시글 등록 -->
+	<insert id="insertReview" parameterType="Review" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO review (video_name,title, writer, content,reg_date)
+		VALUES (#{videoName},#{title}, #{writer}, #{content},now());
+	</insert>
+	
+
+	<!-- 게시글 삭제  -->
+	<delete id="deleteReview" parameterType="int">
+		DELETE FROM review
+		WHERE id = #{id};
+	</delete>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateViewCnt" parameterType="int">
+		UPDATE review
+		SET view_cnt = view_cnt+1
+		WHERE id = #{id};
+	</update>
+	
+	<!-- 게시글 수정 -->
+	<!-- 만약에 날짜가 수정날짜 였다면 같이 수정해줘야된다. -->
+	<update id="updateReview" parameterType="Review">
+		UPDATE review
+		SET title = #{title}, content = #{content}, reg_date = now()
+		WHERE id = #{id};
+	</update>
+	
+	
+</mapper>
