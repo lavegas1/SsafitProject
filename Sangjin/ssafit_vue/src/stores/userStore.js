@@ -2,6 +2,7 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import router from '@/router'
+import store from './store'
 const REST_USER_API = `http://localhost:8080/api-user/user`
 
 export const useUserStore = defineStore('user', () => {
@@ -42,7 +43,7 @@ export const useUserStore = defineStore('user', () => {
   const submit = (credentials) => {
     axios.post(`${REST_USER_API}/login`, credentials)
       .then((res) => {
-        console.log(res);
+        store.commit('setAccount',res.data)
         window.alert("로그인하였습니다.");
         router.push("/")
       })

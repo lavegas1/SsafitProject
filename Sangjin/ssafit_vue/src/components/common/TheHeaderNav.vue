@@ -6,8 +6,8 @@
                 <RouterLink to="/youtube">Youtube</RouterLink> |
                 <RouterLink :to="{ name: 'reviewList' }">ReviewList</RouterLink> |
                 <RouterLink :to="{ name: 'reviewCreate' }">ReviewCreate</RouterLink> |
-                <RouterLink :to="{ name: 'login' }">로그인</RouterLink> |
-                <RouterLink :to="{ name: 'logout' }">로그아웃</RouterLink> |
+                <RouterLink :to="{ name: 'login' }" v-if="!$store.state.account.id">로그인 | </RouterLink> 
+                <RouterLink :to="{ name: 'logout' }" v-if="$store.state.account.id">로그아웃 | </RouterLink> 
                 <RouterLink :to="{ name: 'regist' }">회원가입</RouterLink> |
             </nav>
         </header>

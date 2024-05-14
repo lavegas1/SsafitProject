@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <!-- 네임스페이스에 DAO 풀패키지명을 작성 -->
-<mapper namespace="com.ssafit.review.model.dao.UserDao">
+<mapper namespace="com.ssafit.shopping.model.dao.UserDao">
 	<select id="selectOne" parameterType="Map" resultType="User">
 		SELECT id
 		FROM users
