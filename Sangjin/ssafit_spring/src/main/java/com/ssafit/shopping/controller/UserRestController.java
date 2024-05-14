@@ -14,7 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafit.shopping.model.dto.User;
+import com.ssafit.shopping.model.service.JwtService;
+import com.ssafit.shopping.model.service.JwtServiceImpl;
 import com.ssafit.shopping.model.service.UserService;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 @RestController
@@ -52,11 +57,23 @@ public class UserRestController {
 	
 	//로그인
 	@PostMapping("/user/login")
-	public ResponseEntity<?> login(@RequestBody Map<String,String> params){
+	public ResponseEntity<?> login(@RequestBody Map<String,String> params,HttpServletResponse res) throws InterruptedException{
 		User user = userService.login(params.get("id"), params.get("password"));
 		System.out.println(user);
-		if(user != null)
-			return new ResponseEntity<>(user.getId(),HttpStatus.ACCEPTED);
+		if(user != null) {
+			JwtService jwtService = new JwtServiceImpl();
+			String id = user.getId();
+			String token = jwtService.getToken("id", id);
+			Cookie cookie = new Cookie("token",token);
+			cookie.setHttpOnly(true);
+			cookie.setPath("/");
+			
+			res.addCookie(cookie);
+			
+			
+			
+			return new ResponseEntity<>(id,HttpStatus.OK);
+		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	

@@ -45,6 +45,8 @@ export const useUserStore = defineStore('user', () => {
       .then((res) => {
         store.commit('setAccount',res.data)
         window.alert("로그인하였습니다.");
+        sessionStorage.setItem("token",res.data);
+        console.log(sessionStorage.getItem('token'))
         router.push("/")
       })
       .catch((err) => {

@@ -36,6 +36,23 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 	
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.12.5'
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+	
+implementation 'io.jsonwebtoken:jjwt:0.9.1'
+implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
+implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.1'
+
+implementation 'io.jsonwebtoken:jjwt:0.9.1'
+implementation 'com.sun.xml.bind:jaxb-impl:4.0.1'
+implementation 'com.sun.xml.bind:jaxb-core:4.0.1'
+implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+
+	
+	
+	
 }
 
 tasks.named('test') {
