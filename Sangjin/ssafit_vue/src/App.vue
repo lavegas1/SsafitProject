@@ -7,16 +7,15 @@
 
 <script setup>
 import TheHeaderNav from '@/components/common/TheHeaderNav.vue';
-import { useStore } from 'vuex'; // useStore 함수를 import
+import { useStore } from './stores/store';
 
-const store = useStore(); // Vuex 스토어 가져오기
-
-// setup 함수 내에서 Vuex 스토어를 사용하여 id 값을 가져오고, 필요한 경우 store.commit을 통해 상태를 변경할 수 있습니다.
+const store = useStore();
 const id = sessionStorage.getItem("id");
 
 if (id) {
-  store.commit("setAccount", id);
+  store.account.id = id; // store의 account.id를 직접 설정
 }
+
 </script>
 
 <style scoped>

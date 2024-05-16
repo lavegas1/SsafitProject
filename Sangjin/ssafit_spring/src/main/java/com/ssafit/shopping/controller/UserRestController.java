@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import com.ssafit.shopping.model.service.JwtService;
 import com.ssafit.shopping.model.service.JwtServiceImpl;
 import com.ssafit.shopping.model.service.UserService;
 
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -65,16 +67,32 @@ public class UserRestController {
 			String id = user.getId();
 			String token = jwtService.getToken("id", id);
 			Cookie cookie = new Cookie("token",token);
-			cookie.setHttpOnly(true);
+//			cookie.setHttpOnly(true);
 			cookie.setPath("/");
-			
 			res.addCookie(cookie);
+			
+			System.out.println(cookie.getValue());
+			System.out.println(token);
+			
 			
 			
 			
 			return new ResponseEntity<>(id,HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+	
+	
+	@GetMapping("/user/account/check")
+	public ResponseEntity<?> check(@CookieValue(value="token",required = false) String token){
+		JwtService jwtService = new JwtServiceImpl();
+		Claims claims = jwtService.getClaims(token);
+		
+		if(claims !=null) {
+			String id = claims.get("id").toString();
+			return new ResponseEntity<>(id,HttpStatus.OK);
+		}
+		return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
 	}
 	
 	

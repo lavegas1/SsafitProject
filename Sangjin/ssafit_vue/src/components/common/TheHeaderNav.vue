@@ -6,8 +6,8 @@
                 <RouterLink to="/youtube">Youtube</RouterLink> |
                 <RouterLink :to="{ name: 'reviewList' }">ReviewList</RouterLink> |
                 <RouterLink :to="{ name: 'reviewCreate' }">ReviewCreate</RouterLink> |
-                <RouterLink :to="{ name: 'login' }" v-if="!$store.state.account.id">로그인 | </RouterLink> 
-                <RouterLink :to="{ name: 'logout' }" @click="logout" v-if="$store.state.account.id">로그아웃 | </RouterLink> 
+                <RouterLink :to="{ name: 'login' }" v-if="!store.account.id">로그인 | </RouterLink> 
+                <RouterLink :to="{ name: 'logout' }" @click="logout" v-if="store.account.id">로그아웃 | </RouterLink> 
                 <RouterLink :to="{ name: 'regist' }">회원가입</RouterLink> |
             </nav>
         </header>
@@ -16,12 +16,18 @@
 
 <script setup>
 import router from '@/router';
-import store from '@/stores/store';
+import { useStore } from '@/stores/store';
 
-const logout = ()=>{
-    store.commit('setAccount',0);
+const store = useStore();
+
+const isSessionStorageAvailable = () => {
+    return typeof sessionStorage !== 'undefined' && sessionStorage.getItem('id') !== null;
+}
+
+const logout = () => {
+    store.account.id = 0; // 로그아웃 시 id를 0으로 설정
     sessionStorage.removeItem("id")
-    router.push({path:"/"});
+    router.push({ path: "/" });
 }
 </script>
 
@@ -37,6 +43,6 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-    color: #42b983
+    color: #42b983;
 }
 </style>

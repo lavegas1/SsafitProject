@@ -2,7 +2,8 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import router from '@/router'
-import store from './store'
+import {useStore } from './store.js'
+
 const REST_USER_API = `http://localhost:8080/api-user/user`
 
 export const useUserStore = defineStore('user', () => {
@@ -23,6 +24,7 @@ export const useUserStore = defineStore('user', () => {
       window.location.reload()
     })
   }
+  
   const userList = ref([])
   const getUserList = function(){
     axios.get(REST_USER_API)
@@ -43,11 +45,12 @@ export const useUserStore = defineStore('user', () => {
   const submit = (credentials) => {
     axios.post(`${REST_USER_API}/login`, credentials)
       .then((res) => {
-        store.commit('setAccount',res.data)
+        // const store = useStore();
+        // store.setAccount(res.data);
+        sessionStorage.setItem("id",res.data);
+      
         window.alert("로그인하였습니다.");
-        sessionStorage.setItem("token",res.data);
-        console.log(sessionStorage.getItem('token'))
-        router.push("/")
+        router.replace("/")
       })
       .catch((err) => {
         console.error(err);
@@ -55,5 +58,14 @@ export const useUserStore = defineStore('user', () => {
       });
   }
 
-  return { getUser, getUserList, user,createUser,userList,submit }
+  const check = () =>{
+    axios.get(`${REST_USER_API}/account/check`)
+    .then(({data})=>{
+      console.log(data)
+    })
+  }
+
+
+
+  return { getUser, getUserList, user, createUser, userList, submit, check }
 })
