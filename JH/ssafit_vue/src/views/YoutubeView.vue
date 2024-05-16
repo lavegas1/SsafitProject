@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <h2>SSAFIT Project</h2>
-    <YoutubeVideoSearch/>
+  <div class="container">
     <hr>
+    <h2 class="text-center">SSAFIT Project</h2>
+    <YoutubeVideoSearch/>
     <YoutubeVideoDetail/>
     <hr>
     <YoutubeVideoList/>

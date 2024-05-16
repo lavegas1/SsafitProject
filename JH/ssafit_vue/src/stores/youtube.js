@@ -3,14 +3,14 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 export const useYoutubeStore = defineStore('youtube', () => {
-  const videos = ref([])
-  const selectedVideo = ref(null)
+  const videos = ref(null)
+
 
   const youtubeSearch = function(keyword){
     const URL = 'https://www.googleapis.com/youtube/v3/search'
-    const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY
+    const API_KEY ='AIzaSyAlvV-xRK5nKa1yZ5o0nqUv398_Ok-fVec'
     const defaultKeyword = '운동';
-    const searchKeyword = keyword ? `${keyword}${defaultKeyword}` : defaultKeyword;
+    const searchKeyword = keyword ? `${keyword} ${defaultKeyword}` : defaultKeyword;
     axios({
       url: URL,
       method: 'GET',
@@ -31,9 +31,5 @@ export const useYoutubeStore = defineStore('youtube', () => {
 
   }
 
-  const clickVideo = function(video){
-    selectedVideo.value = video
-  }
-
-  return { youtubeSearch, videos, selectedVideo, clickVideo }
+  return { youtubeSearch, videos }
 })

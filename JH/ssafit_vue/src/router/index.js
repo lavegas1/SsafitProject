@@ -52,29 +52,12 @@ const router = createRouter({
       path: "/regist",
       name: "regist",
       component: RegistView
-    }, 
-    {
-      path: "/user",
-      name: "user",
-      component: UserView,
-      children: [
-        {
-          path: "",
-          name: "userList",
-          component: UserList
-        },
-        {
-          path: "create",
-          name: "userCreate",
-          component: UserCreate
-        },
-        {
-          path: ":id",
-          name: "userDetail",
-          component: UserDetail
-        },
-      ] 
-    }
+    },
+    // {
+    //   path: "/review:id"
+    //   name: "reviewCreate"
+    //   component: ReviewCreate
+    // } 
   ]
 })
 
