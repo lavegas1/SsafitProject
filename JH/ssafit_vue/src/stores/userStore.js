@@ -2,7 +2,7 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import router from '@/router'
-import store from './store'
+import {useStore } from './store.js'
 const REST_USER_API = `http://localhost:8080/api-user/user`
 
 export const useUserStore = defineStore('user', () => {
@@ -40,18 +40,28 @@ export const useUserStore = defineStore('user', () => {
     })
   }
 
-  const submit = (credentials) => {
-    axios.post(`${REST_USER_API}/login`, credentials)
-      .then((res) => {
-        store.commit('setAccount',res.data)
-        window.alert("로그인하였습니다.");
-        router.push("/")
-      })
-      .catch((err) => {
-        console.error(err);
-        window.alert("로그인에 실패하였습니다.");
-      });
+  const submit = async (credentials) => {
+    try {
+      const res = await axios.post(`${REST_USER_API}/login`, credentials);
+      const store = useStore();
+      store.setAccount(res.data);
+      sessionStorage.setItem("id", res.data.id);
+      console.log(store.account.id);
+      window.alert("로그인하였습니다.");
+      router.replace("/");
+    } catch (err) {
+      console.error(err);
+      window.alert("로그인에 실패하였습니다.");
+    }
+  };
+  
+
+  const check = () =>{
+    axios.get(`${REST_USER_API}/account/check`)
+    .then(({data})=>{
+      console.log(data)
+    })
   }
 
-  return { getUser, getUserList, user,createUser,userList,submit }
+  return { getUser, getUserList, user,createUser,userList,submit,check }
 })

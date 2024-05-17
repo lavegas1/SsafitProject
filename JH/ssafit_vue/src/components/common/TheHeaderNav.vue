@@ -5,8 +5,8 @@
                 <RouterLink to="/">Home</RouterLink> |
                 <RouterLink to="/youtube">Youtube</RouterLink> |
                 <RouterLink :to="{ name: 'product' }">ProductList</RouterLink> |
-                <RouterLink :to="{ name: 'login' }" v-if="!$store.state.account.id">로그인</RouterLink> |
-                <RouterLink :to="{ name: 'logout' }" v-if="$store.state.account.id">| 로그아웃</RouterLink>
+                <RouterLink :to="{ name: 'login' }" v-if="!store.account.id">로그인</RouterLink> |
+                <RouterLink :to="{ name: 'logout' }" @click="logout" v-if="store.account.id">| 로그아웃</RouterLink>
                 <RouterLink :to="{ name: 'regist' }">회원가입</RouterLink> 
             </nav>
         </header>
@@ -15,6 +15,20 @@
 
 <script setup>
 // 여기에 필요한 스크립트를 추가하세요
+import router from '@/router';
+import { useStore } from '@/stores/store';
+
+const store = useStore();
+
+const isSessionStorageAvailable = () => {
+    return typeof sessionStorage !== 'undefined' && sessionStorage.getItem('id') !== null;
+}
+
+const logout = () => {
+    store.account.id = 0; // 로그아웃 시 id를 0으로 설정
+    sessionStorage.removeItem("id")
+    router.push({ path: "/" });
+}
 </script>
 
 <style scoped>

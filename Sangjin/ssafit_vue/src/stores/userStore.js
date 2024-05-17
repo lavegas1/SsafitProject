@@ -47,8 +47,8 @@ export const useUserStore = defineStore('user', () => {
       .then((res) => {
         // const store = useStore();
         // store.setAccount(res.data);
-        sessionStorage.setItem("id",res.data);
-      
+        sessionStorage.setItem("id",res.data.id);
+        console.log(store.account.id)
         window.alert("로그인하였습니다.");
         router.replace("/")
       })
