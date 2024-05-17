@@ -1,7 +1,5 @@
 <template>
   <div class="text-center">
-    <hr>
-    <h2>SSAFIT Project</h2>
     <mainPageHeader/>
     <mainPage/>
     <mainPageFooter/>
